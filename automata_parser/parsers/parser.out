@@ -1,0 +1,76 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> statement
+Rule 1     statement -> ID EQUALS expression
+Rule 2     expression -> NUMBER
+Rule 3     expression -> STRING
+
+Terminals, with rules where they appear
+
+EQUALS               : 1
+ID                   : 1
+NUMBER               : 2
+STRING               : 3
+error                :
+
+Nonterminals, with rules where they appear
+
+expression           : 1
+statement            : 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . statement
+    (1) statement -> . ID EQUALS expression
+
+    ID              shift and go to state 2
+
+    statement                      shift and go to state 1
+
+state 1
+
+    (0) S' -> statement .
+
+
+
+state 2
+
+    (1) statement -> ID . EQUALS expression
+
+    EQUALS          shift and go to state 3
+
+
+state 3
+
+    (1) statement -> ID EQUALS . expression
+    (2) expression -> . NUMBER
+    (3) expression -> . STRING
+
+    NUMBER          shift and go to state 5
+    STRING          shift and go to state 6
+
+    expression                     shift and go to state 4
+
+state 4
+
+    (1) statement -> ID EQUALS expression .
+
+    $end            reduce using rule 1 (statement -> ID EQUALS expression .)
+
+
+state 5
+
+    (2) expression -> NUMBER .
+
+    $end            reduce using rule 2 (expression -> NUMBER .)
+
+
+state 6
+
+    (3) expression -> STRING .
+
+    $end            reduce using rule 3 (expression -> STRING .)
